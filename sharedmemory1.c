@@ -72,7 +72,7 @@ main(int argc, char **argv)
 			}
 /* for Cygwin vs Ubuntu */
 #ifndef PTHREAD_MUTEX_ERRORCHECK_NP
-#define PTHREAD_MUTEX_ERRORCHECK PTHREAD_MUTEX_ERRORCHECK
+#define PTHREAD_MUTEX_ERRORCHECK_NP PTHREAD_MUTEX_ERRORCHECK
 #endif
 		if (pthread_mutexattr_settype(&mutex_attr,PTHREAD_MUTEX_ERRORCHECK_NP))
 			{
