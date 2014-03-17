@@ -1,5 +1,5 @@
 /* 
- * Mike Foley, mjfoley@gmail.com, 914-512-8705 */
+ * Mike Foley, mjfoley@gmail.com, 914-512-8705
  *
  * compiled on Ubuntu Linux
    gcc -pthread -g -o sharedmemory1 sharedmemory1.c
@@ -7,7 +7,7 @@
  * this is the first program, it creates, initializes, and eventually destroys the shared memory region around updating it in cooperation with the second program.
  *
  * run with no arguments
-
+ */
 #include <stdio.h>
 #include <time.h>
 #include <string.h>
@@ -70,6 +70,10 @@ main(int argc, char **argv)
 			shmctl(shmid,IPC_RMID,0);
 			return(__LINE__);
 			}
+/* for Cygwin vs Ubuntu */
+#ifndef PTHREAD_MUTEX_ERRORCHECK_NP
+#define PTHREAD_MUTEX_ERRORCHECK PTHREAD_MUTEX_ERRORCHECK
+#endif
 		if (pthread_mutexattr_settype(&mutex_attr,PTHREAD_MUTEX_ERRORCHECK_NP))
 			{
 			fprintf(stderr,"%5u: Unable to settype mutex_attr for shared memory region id %d: errno=%d %s \n",__LINE__,
@@ -80,7 +84,7 @@ main(int argc, char **argv)
 			}
 		if (pthread_mutexattr_setpshared(&mutex_attr,PTHREAD_PROCESS_SHARED))
 			{
-			fprintf(stderr,"%5u: Unable to settype mutex_attr for shared memory region id %d: errno=%d %s \n",__LINE__,
+			fprintf(stderr,"%5u: Unable to setpshared for shared memory region id %d: errno=%d %s \n",__LINE__,
 				shmid,errno,strerror(errno));
 			shmdt(region);
 			shmctl(shmid,IPC_RMID,0);
